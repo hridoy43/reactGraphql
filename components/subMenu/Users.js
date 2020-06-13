@@ -1,23 +1,52 @@
 
+import { useState } from 'react';
 import { Layout, Menu } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, LoadingOutlined } from '@ant-design/icons';
+import { useQuery } from '@apollo/react-hooks'
+import { UsersQuery } from '../../pages/api/queries'
+import SingleUserView from '../../components/dataView/userView'
 
 
-const { Sider } = Layout;
+const { Sider, Content } = Layout;
 
-export default function Users() {
+function Users({ data }) {
+    const [userId, setUserId] = useState('')
+
+    const onclickItem = (id) => {
+        setUserId(id)
+        console.log(id);
+    }
+
     return (
+        <Layout>
+            <Sider style={{ borderRight: '1px solid #001529', overflow: 'auto', height: '100vh', backgroundColor: '#fff' }}>
+                <Menu
+                    mode="inline"
+                    defaultSelectedKeys={['0']}
+                    style={{ height: '100%', borderRight: 0 }}
+                >
+                    {data && data.map((item, index) => <Menu.Item key={index + 1} onClick={e => onclickItem(item.id)} icon={<UserOutlined />}>{item.data.name}</Menu.Item>)}
+                </Menu>
+            </Sider>
+            <Content style={{ margin: 20, display: 'flex', justifyContent: 'flex-start' }}>
+                {userId && <SingleUserView userId={userId} />}
+            </Content>
 
-        <Menu
-            mode="inline"
-            defaultSelectedKeys={['0']}
-            style={{ height: '100%', borderRight: 0 }}
-        >
-            <Menu.Item key="1" icon={<UserOutlined />}>Users</Menu.Item>
-            <Menu.Item key="2" icon={<UserOutlined />}>Users</Menu.Item>
-            <Menu.Item key="3" icon={<UserOutlined />}>Users</Menu.Item>
-        </Menu>
-
-
+        </Layout>
     )
 }
+
+const getUsers = () => {
+    const { loading, error, data } = useQuery(UsersQuery)
+
+    if (loading) {
+        return <div><center><LoadingOutlined /></center></div>;
+    }
+    if (error) {
+        console.error(error);
+        return <div>Error!</div>;
+    }
+    return <Users data={data.users} />
+}
+
+export default getUsers;

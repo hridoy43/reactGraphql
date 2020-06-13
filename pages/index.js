@@ -9,6 +9,7 @@ import SiteMenu from '../components/SiteMenu'
 import Users from '../components/subMenu/Users'
 import Posts from '../components/subMenu/Posts'
 import Comments from '../components/subMenu/Comments'
+import { BreakingChangeType } from 'graphql';
 
 
 const { Header, Content, Sider } = Layout;
@@ -22,16 +23,15 @@ export default function Home() {
   return (
     <>
       <MainLayout home>
-        <Layout>
+        <Layout style={{ backgroundColor: '#fff', height: '100vh' }}>
           <Sider style={{ paddingRight: 1, overflow: 'auto', height: '100vh', }}>
             <SiteMenu onClickMenuItem={onClickMenuItem} />
           </Sider>
-          <Sider style={{ paddingRight: 1, overflow: 'auto', height: '100vh', }}>
+
+          <Layout style={{ backgroundColor: '#fff', height: '100vh' }}>
             {menuItem === "Users" && <Users /> || menuItem === "Posts" && <Posts /> || menuItem === "Comments" && <Comments />}
-          </Sider>
-          <Content>
-            <h2>hello</h2>
-          </Content>
+          </Layout>
+
         </Layout>
       </MainLayout >
 
@@ -41,6 +41,9 @@ export default function Home() {
             paddingRight: 1,
             overflow: 'auto',
             height: '100vh',
+          }
+          .site-layout-bg{
+            backgroundColor:'#fff',
           }
         `}
       </style>

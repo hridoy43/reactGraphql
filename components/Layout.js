@@ -29,8 +29,8 @@ export default ({ children, home }) => {
                     </Menu.Item>
                 </Menu>
             </Header>
-            <main className="site-layout-background" style={{ height: '100vh' }}>
-                {children}
+            <main style={{ height: '100vh' }} >
+                { children }
             </main>
             <style jsx>
                 {`
