@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
 import { LoadingOutlined } from '@ant-design/icons'
 import { Select, Typography } from 'antd';
 import { useQuery } from '@apollo/react-hooks'
 import { all_comment_query } from '../../pages/api/queries'
 
 const { Option } = Select;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 
 function CustomSelectForPost({ postData, allComment, onCommentTagging }) {
@@ -21,12 +20,12 @@ function CustomSelectForPost({ postData, allComment, onCommentTagging }) {
 
     return (
         <div>
-            <div><Title level={4}><Text strong>Comments</Text></Title>
+            <div>
                 <Text type="secondary">Assign Comment to the post</Text>
             </div>
             <Select
                 mode="multiple"
-                style={{ width: '350px' }}
+                style={{ marginTop: 3 }}
                 placeholder="Please select"
                 defaultValue={defaultValue}
                 onChange={handleChange}

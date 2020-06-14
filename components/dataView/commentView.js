@@ -1,4 +1,5 @@
-import { Form, Input, Button, Typography } from 'antd';
+import { useState } from 'react';
+import { Form, Button, Typography } from 'antd';
 import { LoadingOutlined, CopyOutlined } from '@ant-design/icons'
 import { useQuery } from '@apollo/react-hooks'
 import { useMutation } from "@apollo/react-hooks";
@@ -6,6 +7,11 @@ import { single_comment_query, all_comment_query } from '../../pages/api/queries
 import { SingleCommentUpdate } from '../../pages/api/mutations'
 import CustomSelectForComment from '../customSelect/customSelectForComment'
 import { errorMessage, successMessage } from '../message'
+import dynamic from 'next/dynamic'
+
+const CKEditor = dynamic(() => import('../../components/CkEditor'), {
+    ssr: false
+})
 
 
 const { Title, Text } = Typography;
@@ -19,6 +25,7 @@ const validateMessages = {
 };
 
 function SingleUserView({ commentData }) {
+    const [commentBody, setCommentBody] = useState(commentData)
     let selectedPost = ''
     let deSelectedPost = ''
 
@@ -54,12 +61,12 @@ function SingleUserView({ commentData }) {
     })
 
     const onFinish = values => {
-        const comment = values.comment;
+        // const comment = values.comment;
         editUser({
             variables: {
                 _id: `${commentData.id}`,
                 payload: {
-                    body: `${comment.body}`,
+                    body: `${commentBody}`,
                 },
                 connect: { post_id: selectedPost },
                 disconnect: { post_id: deSelectedPost }
@@ -77,18 +84,25 @@ function SingleUserView({ commentData }) {
                 <Form.Item >
                     <div style={{ display: 'flex', direction: 'row', justifyContent: 'space-between' }}>
                         <Title level={3}><Text>Edit Comment</Text></Title>
-                        <Button type="primary" htmlType="submit" icon={<CopyOutlined />} >
+                        <Button type="primary" ghost shape="round" size="large" htmlType="submit" icon={<CopyOutlined />} >
                             Update
                         </Button>
                     </div>
                 </Form.Item>
-                <Form.Item initialValue={commentData.data.body} name={['comment', 'body']} label="Body" rules={[{ type: 'required' }]}>
-                    <Input />
+                <Form.Item name={['post', 'body']} label="Body" rules={[{ type: 'required' }]}>
+                    <CKEditor
+                        data={commentData.data.body}
+                        onChange={(e, editor) => setCommentBody(editor.getData())}
+                    />
+                </Form.Item>
+
+                <Form.Item name={['comment', 'post']} label="Post">
+                    <CustomSelectForComment commentData={commentData} onPostTagging={onPostTagging} />
                 </Form.Item>
 
             </Form>
             <div>
-                <CustomSelectForComment commentData={commentData} onPostTagging={onPostTagging} />
+
             </div>
         </div >
     )

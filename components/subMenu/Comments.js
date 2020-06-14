@@ -5,6 +5,7 @@ import { CommentOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useQuery } from '@apollo/react-hooks'
 import { all_comment_query } from '../../pages/api/queries'
 import SingleCommentView from '../../components/dataView/commentView'
+import { Empty } from 'antd'
 
 
 const { Sider, Content } = Layout;
@@ -18,7 +19,7 @@ function Comments({ data }) {
     }
 
     return (
-        <Layout>
+        <Layout style={{ backgroundColor: '#fff' }}>
             <Sider style={{ borderRight: '1px solid #001529', overflow: 'hidden', height: '100vh', backgroundColor: '#fff' }}>
                 <Menu
                     mode="inline"
@@ -28,8 +29,8 @@ function Comments({ data }) {
                     {data && data.map((item, index) => <Menu.Item key={index + 1} onClick={e => onclickItem(item.id)} icon={<CommentOutlined />}>{item.data.body}</Menu.Item>)}
                 </Menu>
             </Sider>
-            <Content style={{ margin: 20, display: 'flex', justifyContent: 'flex-start' }}>
-                {commentId && <SingleCommentView commentId={commentId} />}
+            <Content style={{ margin: 20 }}>
+                {commentId && <SingleCommentView commentId={commentId} /> || <Empty />}
             </Content>
 
         </Layout>

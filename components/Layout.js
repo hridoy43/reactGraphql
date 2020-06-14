@@ -1,15 +1,17 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 
 
-const { Header, Content, Sider } = Layout;
+const { Header } = Layout;
 
 export default ({ children, home }) => {
     const navKey = !home ? '2' : '1'
     return (
         <Layout style={{ minHeight: '100vh' }}>
+            <Head>
+                <title>ReactGraphQL</title>
+            </Head>
             <Header className="header">
                 <h3 className="logo">React GraphQL</h3>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[navKey]}>
@@ -29,8 +31,8 @@ export default ({ children, home }) => {
                     </Menu.Item>
                 </Menu>
             </Header>
-            <main style={{ height: '100vh' }} >
-                { children }
+            <main style={{ height: '100vh', backgroundColor: '#fff' }} >
+                {children}
             </main>
             <style jsx>
                 {`
@@ -42,7 +44,7 @@ export default ({ children, home }) => {
                     margin: 0 16px 0 0;
                   }
                   
-                  .site-layout-background {
+                  .site-bg {
                     background: #fff;
                   }
                 `}

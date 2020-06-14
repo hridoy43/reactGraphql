@@ -1,18 +1,13 @@
-import Head from 'next/head'
 import React, { useState } from 'react'
-
 import MainLayout from '../components/Layout'
-import { Row, Col, Layout, Menu, } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-
+import { Layout } from 'antd';
 import SiteMenu from '../components/SiteMenu'
 import Users from '../components/subMenu/Users'
 import Posts from '../components/subMenu/Posts'
 import Comments from '../components/subMenu/Comments'
-import { BreakingChangeType } from 'graphql';
 
 
-const { Header, Content, Sider } = Layout;
+const { Sider } = Layout;
 
 export default function Home() {
   const [menuItem, setMenuItem] = useState("Users")

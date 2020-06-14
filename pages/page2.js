@@ -1,11 +1,10 @@
 import Layout from '../components/Layout'
-import { Empty } from 'antd'
+import Empty from '../components/Empty'
 
 export default function Home() {
     return (
         <Layout>
-            <Empty style={{ backgroundColor: '#fff', paddingTop: '100px' }}>
-            </Empty>
+            <Empty />
         </Layout>
     )
 }

@@ -9,21 +9,15 @@ import CustomSelectForUser from '../customSelect/customSelectForUser'
 import { errorMessage, successMessage } from '../message'
 
 
+
 const { Title, Text } = Typography;
 const layout = {
     labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
+    wrapperCol: { span: 24 },
 };
 
 const validateMessages = {
     required: '${label} is required!',
-    types: {
-        email: '${label} is not validate email!',
-        number: '${label} is not a validate number!',
-    },
-    number: {
-        range: '${label} must be between ${min} and ${max}',
-    },
 };
 
 function SingleUserView({ userData }) {
@@ -80,26 +74,27 @@ function SingleUserView({ userData }) {
 
     return (
         <div key={userData.id}>
-            <div>
-                <Title level={3}><Text>Edit User</Text></Title>
-            </div>
 
-            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} initialValues={{ remember: false }}>
+            <Form {...layout} name="nest-user" layout={'vertical'} onFinish={onFinish} validateMessages={validateMessages} initialValues={{ remember: false }}>
+                <Form.Item >
+                    <div style={{ display: 'flex', direction: 'row', justifyContent: 'space-between' }}>
+                        <Title level={3}><Text>Edit User</Text></Title>
+                        <Button type="primary" ghost shape="round" size="large" htmlType="submit" icon={<CopyOutlined />} >
+                            Update
+                    </Button>
+                    </div>
+                </Form.Item>
                 <Form.Item initialValue={userData.data.name} name={['user', 'name']} label="Name" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item initialValue={userData.data.address} name={['user', 'address']} label="Address" rules={[{ type: 'string' }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                    <Button type="primary" htmlType="submit" icon={<CopyOutlined />} >
-                        Update
-                </Button>
+                <Form.Item name={['comment', 'post']} label="Post">
+                    <CustomSelectForUser userPostData={userData.post} onPostTagging={onPostTagging} />
                 </Form.Item>
             </Form>
-            <div>
-                <CustomSelectForUser userPostData={userData.post} onPostTagging={onPostTagging} />
-            </div>
+
         </div >
     )
 };

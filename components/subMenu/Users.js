@@ -5,6 +5,7 @@ import { UserOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useQuery } from '@apollo/react-hooks'
 import { UsersQuery } from '../../pages/api/queries'
 import SingleUserView from '../../components/dataView/userView'
+import { Empty } from 'antd'
 
 
 const { Sider, Content } = Layout;
@@ -18,8 +19,8 @@ function Users({ data }) {
     }
 
     return (
-        <Layout>
-            <Sider style={{ borderRight: '1px solid #001529', overflow: 'auto', height: '100vh', backgroundColor: '#fff' }}>
+        <Layout style={{ backgroundColor: '#fff' }}>
+            <Sider style={{ borderRight: '1px solid #001529', overflow: 'hidden', height: '100vh', backgroundColor: '#fff' }}>
                 <Menu
                     mode="inline"
                     defaultSelectedKeys={['0']}
@@ -28,8 +29,8 @@ function Users({ data }) {
                     {data && data.map((item, index) => <Menu.Item key={index + 1} onClick={e => onclickItem(item.id)} icon={<UserOutlined />}>{item.data.name}</Menu.Item>)}
                 </Menu>
             </Sider>
-            <Content style={{ margin: 20, display: 'flex', justifyContent: 'flex-start' }}>
-                {userId && <SingleUserView userId={userId} />}
+            <Content style={{ margin: 20 }}>
+                {userId && <SingleUserView userId={userId} /> || <Empty />}
             </Content>
 
         </Layout>

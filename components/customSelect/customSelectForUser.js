@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
 import { LoadingOutlined } from '@ant-design/icons'
 import { Select, Typography } from 'antd';
 import { useQuery } from '@apollo/react-hooks'
 import { all_post_query } from '../../pages/api/queries'
 
 const { Option } = Select;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 
 function CustomSelectForUser({ userPostData, allPost, onPostTagging }) {
@@ -21,12 +20,12 @@ function CustomSelectForUser({ userPostData, allPost, onPostTagging }) {
 
     return (
         <div>
-            <div><Title level={4}><Text strong>Posts</Text></Title>
+            <div>
                 <Text type="secondary">Tag post to the users</Text>
             </div>
             <Select
                 mode="multiple"
-                style={{ width: '350px' }}
+                style={{ marginTop: 3 }}
                 placeholder="Please select"
                 defaultValue={defaultValue}
                 onChange={handleChange}

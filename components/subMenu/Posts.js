@@ -5,6 +5,7 @@ import { PicRightOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useQuery } from '@apollo/react-hooks'
 import { all_post_query } from '../../pages/api/queries'
 import SinglePostView from '../../components/dataView/postView'
+import { Empty } from 'antd'
 
 
 const { Sider, Content } = Layout;
@@ -18,7 +19,7 @@ function Posts({ data }) {
     }
 
     return (
-        <Layout>
+        <Layout style={{ backgroundColor: '#fff' }}>
             <Sider style={{ borderRight: '1px solid #001529', overflow: 'hidden', height: '100vh', backgroundColor: '#fff' }}>
                 <Menu
                     mode="inline"
@@ -28,8 +29,8 @@ function Posts({ data }) {
                     {data && data.map((item, index) => <Menu.Item key={index + 1} onClick={e => onclickItem(item.id)} icon={<PicRightOutlined />}>{item.data.title}</Menu.Item>)}
                 </Menu>
             </Sider>
-            <Content style={{ margin: 20, display: 'flex', justifyContent: 'flex-start' }}>
-                {postId && <SinglePostView postId={postId} />}
+            <Content style={{ margin: 20 }}>
+                {postId && <SinglePostView postId={postId} /> || <Empty />}
             </Content>
 
         </Layout>

@@ -7,27 +7,27 @@ import { useMutation } from "@apollo/react-hooks";
 import { SinglePostUpdate } from '../../pages/api/mutations'
 import CustomSelectForPost from '../customSelect/customSelectForPost'
 import { errorMessage, successMessage } from '../message'
+import dynamic from 'next/dynamic'
+
+const CKEditor = dynamic(() => import('../../components/CkEditor'), {
+    ssr: false
+})
 
 
 const { Title, Text } = Typography;
 const layout = {
     labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
+    wrapperCol: { span: 24 },
 };
 
 const validateMessages = {
-    required: '${label} is required!',
     types: {
-        email: '${label} is not validate email!',
-        number: '${label} is not a validate number!',
-    },
-    number: {
-        range: '${label} must be between ${min} and ${max}',
-    },
+        string: '${label} is not validate String!',
+    }
 };
 
 function SinglePostView({ postData }) {
-    console.log('Log: SinglePostView -> postData', postData)
+    const [postBody, setPostBody] = useState(postData.data.body)
     let selectedComment = []
     let deSelectedComment = []
 
@@ -59,7 +59,7 @@ function SinglePostView({ postData }) {
     const [editUser] = useMutation(SinglePostUpdate, {
         update: updateCache,
         onCompleted: successMessage,
-        //onError: errorMessage
+        onError: errorMessage
     })
 
     const onFinish = values => {
@@ -69,7 +69,7 @@ function SinglePostView({ postData }) {
                 _id: `${postData.id}`,
                 payload: {
                     title: `${post.title}`,
-                    body: `${post.body}`
+                    body: `${postBody}`
                 },
                 connect: { comment_ids: selectedComment },
                 disconnect: { comment_ids: deSelectedComment }
@@ -81,26 +81,31 @@ function SinglePostView({ postData }) {
 
     return (
         <div key={postData.id}>
-            <div>
-                <Title level={3}><Text>Edit User</Text></Title>
-            </div>
 
-            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} initialValues={{ remember: false }}>
+
+            <Form {...layout} name="nest-post" layout={'vertical'} onFinish={onFinish} validateMessages={validateMessages} initialValues={{ remember: false }}>
+                <Form.Item>
+                    <div style={{ display: 'flex', direction: 'row', justifyContent: 'space-between' }}>
+                        <Title level={3}><Text>Edit User</Text></Title>
+                        <Button type="primary" ghost shape="round" size="large" htmlType="submit" icon={<CopyOutlined />} >
+                            Update
+                </Button>
+                    </div>
+                </Form.Item>
                 <Form.Item initialValue={postData.data.title} name={['post', 'title']} label="Title" rules={[{ type: 'string' }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item initialValue={postData.data.body} name={['post', 'body']} label="Body" rules={[{ type: 'string' }]}>
-                    <Input />
+                <Form.Item name={['post', 'body']} label="Body">
+                    <CKEditor
+                        data={postData.data.body}
+                        onChange={(e, editor) => setPostBody(editor.getData())}
+                    />
                 </Form.Item>
-                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                    <Button type="primary" htmlType="submit" icon={<CopyOutlined />} >
-                        Update
-                </Button>
+                <Form.Item name={['post', 'comment']} label="Comments">
+                    <CustomSelectForPost postData={postData.comment} onCommentTagging={onCommentTagging} />
                 </Form.Item>
+
             </Form>
-            <div>
-                <CustomSelectForPost postData={postData.comment} onCommentTagging={onCommentTagging} />
-            </div>
         </div >
     )
 };
