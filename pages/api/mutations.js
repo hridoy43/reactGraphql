@@ -37,3 +37,20 @@ mutation($_id: String!, $payload: post_input_payload!,$connect: post_input_conne
   }
 }
 `;
+
+export const SingleCommentUpdate = gql`
+mutation($_id: String!, $payload: comment_input_payload!,$connect: comment_input_connection_payload!,$disconnect: comment_input_disconnection_payload!){
+  updateComment(_id:$_id,payload:$payload,connect:$connect,disconnect:$disconnect){
+    id,
+    data {
+      body
+    }
+    post {
+      id,
+      data {
+        title
+      }
+    }
+  }
+}
+`;

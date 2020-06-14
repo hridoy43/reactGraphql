@@ -66,4 +66,19 @@ query getAllComment {
   }
 }`
 
+export const single_comment_query = gql`
+query getSingleCommentData($_id: String!) {
+  comment(_id: $_id) {
+    id,
+    data {
+      body
+    }
+    post {
+      id,
+      data {
+        title
+      }
+    }
+  }
+}`
 
