@@ -5,7 +5,7 @@ import { SingleUserQuery, UsersQuery } from '../../pages/api/queries'
 import { useQuery } from '@apollo/react-hooks'
 import { useMutation } from "@apollo/react-hooks";
 import { SingleUserUpdate } from '../../pages/api/mutations'
-import CustomSelectForUsers from '../customSelect/customSelectForUsers'
+import CustomSelectForUser from '../customSelect/customSelectForUser'
 import { errorMessage, successMessage } from '../message'
 
 
@@ -58,7 +58,7 @@ function SingleUserView({ userData }) {
     const [editUser] = useMutation(SingleUserUpdate, {
         update: updateCache,
         onCompleted: successMessage,
-        // onError: errorMessage
+        onError: errorMessage
     })
 
     const onFinish = values => {
@@ -98,7 +98,7 @@ function SingleUserView({ userData }) {
                 </Form.Item>
             </Form>
             <div>
-                <CustomSelectForUsers userPostData={userData.post} onPostTagging={onPostTagging} />
+                <CustomSelectForUser userPostData={userData.post} onPostTagging={onPostTagging} />
             </div>
         </div >
     )

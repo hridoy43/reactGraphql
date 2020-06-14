@@ -34,8 +34,34 @@ query getAllPost {
   posts {
     id,
     data {
-      body,
       title
+    }
+  }
+}`
+
+export const single_post_query = gql`
+query getSinglePostData($_id: String!) {
+  post(_id: $_id) {
+    id
+    data {
+      body
+      title
+    }
+    comment {
+      id
+      data {
+        body
+      }
+    }
+  }
+}`
+
+export const all_comment_query = gql`
+query getAllComment {
+  comments {
+    id,
+    data {
+      body
     }
   }
 }`

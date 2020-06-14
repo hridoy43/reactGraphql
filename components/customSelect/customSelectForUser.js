@@ -8,7 +8,7 @@ const { Option } = Select;
 const { Title, Text } = Typography;
 
 
-function CustomSelectForUsers({ userPostData, allPost, onPostTagging }) {
+function CustomSelectForUser({ userPostData, allPost, onPostTagging }) {
 
     const defaultValue = userPostData.map(post => post.id)
 
@@ -48,7 +48,7 @@ export default function ({ userPostData, onPostTagging }) {
         console.error(error);
         return <div>Error!</div>;
     }
-    return <CustomSelectForUsers userPostData={userPostData} allPost={data.posts} onPostTagging={onPostTagging} />
+    return <CustomSelectForUser userPostData={userPostData} allPost={data.posts} onPostTagging={onPostTagging} />
 }
 
 
