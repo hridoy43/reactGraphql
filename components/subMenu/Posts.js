@@ -15,7 +15,6 @@ function Posts({ data }) {
 
     const onclickItem = (id) => {
         setPostId(id)
-        console.log(id);
     }
 
     return (

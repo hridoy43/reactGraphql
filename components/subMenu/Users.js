@@ -15,7 +15,6 @@ function Users({ data }) {
 
     const onclickItem = (id) => {
         setUserId(id)
-        console.log(id);
     }
 
     return (

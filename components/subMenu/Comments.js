@@ -15,7 +15,6 @@ function Comments({ data }) {
 
     const onclickItem = (id) => {
         setCommentId(id)
-        console.log(id);
     }
 
     return (

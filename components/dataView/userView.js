@@ -32,11 +32,11 @@ function SingleUserView({ userData }) {
 
     const updateCache = (cache, { data }) => {
         const existingAllUserData = cache.readQuery({ query: UsersQuery })
-
         const newUserData = data.updateUser;
+
         cache.writeQuery({
             query: UsersQuery,
-            data: { users: [...existingAllUserData.users.map(user => (user.id == userData.id) ? user = newUserData : user)] }
+            data: { users: [...existingAllUserData.users.map(user => (user.id == userData.id) ? newUserData : user)] }
         })
 
         cache.writeQuery({
