@@ -25,7 +25,7 @@ const validateMessages = {
 };
 
 function SingleUserView({ commentData }) {
-    const [commentBody, setCommentBody] = useState(commentData)
+    const [commentBody, setCommentBody] = useState(commentDatacommentData.data.body)
     let selectedPost = ''
     let deSelectedPost = ''
 
