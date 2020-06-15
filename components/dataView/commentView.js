@@ -9,7 +9,7 @@ import CustomSelectForComment from '../customSelect/customSelectForComment'
 import { errorMessage, successMessage } from '../message'
 import dynamic from 'next/dynamic'
 
-const CKEditor = dynamic(() => import('../../components/CkEditor'), {
+const CKEditor = dynamic(() => import('../../utils/CkEditor'), {
     ssr: false
 })
 
